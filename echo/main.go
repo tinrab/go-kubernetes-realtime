@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -14,11 +15,22 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 512,
 }
 
+type IndexData struct {
+	Hostname string
+}
+
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 
-	r.StaticFile("/", "./index.html")
+	r.LoadHTMLFiles("index.html")
+	indexData := IndexData{
+		Hostname: os.Getenv("HOSTNAME"),
+	}
+
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", indexData)
+	})
 	r.GET("/ws", echoHandler)
 
 	r.Use(cors.Default())

@@ -1,0 +1,10 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: echo-ingress
+  annotations:
+    nginx.org/websocket-services: 'echo-service'
+spec:
+  backend:
+    serviceName: echo-service
+    servicePort: 3000

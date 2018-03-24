@@ -1,0 +1,13 @@
+FROM golang:1.10.0
+
+RUN adduser --disabled-password --gecos '' api
+USER api
+
+WORKDIR /go/src/app
+COPY echo .
+
+RUN go install -v ./...
+
+EXPOSE 3000
+
+CMD [ "app" ]

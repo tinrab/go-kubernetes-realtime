@@ -7,8 +7,10 @@
 </head>
 
 <body>
+  <h1>{{.Hostname}}</h1>
+
   <script>
-    var ws = new WebSocket('ws://localhost:8081/ws');
+    var ws = new WebSocket('ws://' + location.host + '/ws');
     ws.onmessage = function (msg) {
       console.log(msg.data);
     };
