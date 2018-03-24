@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Echo</title>
+</head>
+
+<body>
+  <script>
+    var ws = new WebSocket('ws://localhost:8081/ws');
+    ws.onmessage = function (msg) {
+      console.log(msg.data);
+    };
+    ws.onopen = function () {
+      setInterval(function () {
+        ws.send('Hello, World!');
+      }, 1000);
+    }
+  </script>
+</body>
+
+</html>
